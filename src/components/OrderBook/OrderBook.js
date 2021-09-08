@@ -4,9 +4,10 @@ import styles from './OrderBook.styles'
 import {
     API_URL,
     CURRENCY_PAIR,
-    ORDER_BOOK_AMOUNT_DIGITS, ORDER_BOOK_PRICE_DIGITS,
-    ORDER_BOOK_TABLE_LIMIT,
-    ORDER_BOOK_TOTAL_DIGITS
+    PRICE_DIGITS,
+    AMOUNT_DIGITS,
+    TOTAL_DIGITS,
+    ORDER_BOOK_TABLE_LIMIT
 } from "../../constants/constants";
 import clsx from "clsx";
 
@@ -59,36 +60,35 @@ function OrderBook() {
 
     const {bids, asks} = orders;
 
-    const sortArrayBigToSmall = (arr) => {
-        return arr && arr.sort((a, b) => (a[0] + b[0]))
+    const sortArrayBigToSmall = (array) => {
+        return array && array.sort((a, b) => (a[0] + b[0]))
     }
 
-    const sortArraySmallToBig = (arr) => {
-        return arr && arr.sort((a, b) => (a[0] - b[0]))
+    const sortArraySmallToBig = (array) => {
+        return array && array.sort((a, b) => (a[0] - b[0]))
     }
 
-    const limitArray = (arr) => {
-        let newArray = []
-        arr &&
-        arr.map((item, index) => {
-            if (index < ORDER_BOOK_TABLE_LIMIT) {
-                newArray.push(item)
-            }
-        })
-        return newArray
+    const limitArray = (array) => {
+        if (array.length > ORDER_BOOK_TABLE_LIMIT) {
+            let newArray = []
+            newArray = array.slice(0, ORDER_BOOK_TABLE_LIMIT)
+            return newArray
+        } else {
+            return array
+        }
     }
 
-    const orderRows = (arr, type) => (
-        arr &&
-        arr.map((item, index) => {
+    const orderRows = (array, type) => (
+        array &&
+        array.map((item, index) => {
             const price = parseFloat(item[0]);
             const amount = parseFloat(item[1]);
             const total = item[0] * item[1];
             return (
                 <tr key={index}>
-                    <td className={clsx(classes.priceColumn, type === ASKS ? classes.asksPriceColumn : classes.bidsPriceColumn)}> {price.toFixed(ORDER_BOOK_PRICE_DIGITS)} </td>
-                    <td className={classes.amountColumn}> {amount.toFixed(ORDER_BOOK_AMOUNT_DIGITS)} </td>
-                    <td className={classes.totalColumn}> {total.toFixed(ORDER_BOOK_TOTAL_DIGITS)} </td>
+                    <td className={clsx(classes.priceColumn, type === ASKS ? classes.asksPriceColumn : classes.bidsPriceColumn)}> {price.toFixed(PRICE_DIGITS)} </td>
+                    <td className={classes.amountColumn}> {amount.toFixed(AMOUNT_DIGITS)} </td>
+                    <td className={classes.totalColumn}> {total.toFixed(TOTAL_DIGITS)} </td>
                 </tr>
             )
         })
@@ -96,14 +96,11 @@ function OrderBook() {
 
     return (
         <div className={classes.root}>
-            {/*Order book asks table*/}
             <table className={classes.table}>
                 <TableHeader/>
+                {/*Order book asks*/}
                 <tbody>{asks && orderRows(limitArray(sortArraySmallToBig(asks)).reverse(), ASKS)}</tbody>
-            </table>
-            {/*Order book bids table*/}
-            <table className={classes.table}>
-                <TableHeader/>
+                {/*Order book bids*/}
                 <tbody>{bids && orderRows(limitArray(sortArrayBigToSmall(bids)), BIDS)}</tbody>
             </table>
         </div>

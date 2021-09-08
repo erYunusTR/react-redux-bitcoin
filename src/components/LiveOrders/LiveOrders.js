@@ -5,10 +5,11 @@ import {
     API_URL,
     CURRENCY_PAIR,
     LIVE_ORDERS_TABLE_LIMIT,
-    ORDER_BOOK_AMOUNT_DIGITS,
-    ORDER_BOOK_PRICE_DIGITS
+    AMOUNT_DIGITS,
+    PRICE_DIGITS
 } from "../../constants/constants";
 import clsx from "clsx";
+import moment from "moment";
 
 const useStyles = makeStyles(styles)
 
@@ -55,22 +56,23 @@ function LiveOrders() {
         };
     }, []);
 
-
-    const orderRows = (arr) => (
-        arr &&
-        arr.map((item, index) => {
-            const price = item.price;
-            const amount = item.amount;
+    const orderRows = (array) => (
+        array &&
+        array.map((item, index) => {
+            const price = parseFloat(item.price);
+            const amount = parseFloat(item.amount);
             const dateTime = item.datetime;
-            const orderType = item.order_type;
+            const orderType = parseInt(item.order_type);
 
-            return (
-                <tr key={index}>
-                    <td className={clsx(classes.priceColumn, orderType == 0 ? classes.buyPriceColumn : classes.sellPriceColumn)}> {price && price.toFixed(ORDER_BOOK_PRICE_DIGITS)} </td>
-                    <td className={classes.amountColumn}> {amount && amount.toFixed(ORDER_BOOK_AMOUNT_DIGITS)} </td>
-                    <td className={classes.timeColumn}> {(dateTime)} </td>
-                </tr>
-            )
+            if (price && amount) {
+                return (
+                    <tr key={index}>
+                        <td className={clsx(classes.priceColumn, orderType == 0 ? classes.buyPriceColumn : classes.sellPriceColumn)}> {price.toFixed(PRICE_DIGITS)} </td>
+                        <td className={classes.amountColumn}> {amount.toFixed(AMOUNT_DIGITS)} </td>
+                        <td className={classes.timeColumn}>{moment.unix(dateTime).format("HH:mm:ss")}</td>
+                    </tr>
+                )
+            }
         })
     );
 
