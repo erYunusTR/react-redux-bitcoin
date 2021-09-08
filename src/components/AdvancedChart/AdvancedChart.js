@@ -12,7 +12,7 @@ function AdvancedChart() {
         <div className={classes.root}>
             <TradingViewWidget
                 autosize
-                symbol="BTCUSDT"
+                symbol="BTCUSD"
                 interval="15"
                 theme="Dark"
                 style="1"

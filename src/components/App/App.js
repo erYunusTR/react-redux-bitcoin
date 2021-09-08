@@ -2,10 +2,10 @@ import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import styles from './App.styles'
 import {Grid} from "@material-ui/core";
-import OrderBook from "./components/OrderBook";
-import LiveOrders from "./components/LiveOrders";
-import LiveTrades from "./components/LiveTrades";
-import AdvancedChart from "./components/AdvancedChart";
+import OrderBook from "../OrderBook";
+import LiveOrders from "../LiveOrders";
+import LiveTrades from "../LiveTrades";
+import AdvancedChart from "../AdvancedChart";
 
 const useStyles = makeStyles(styles)
 
