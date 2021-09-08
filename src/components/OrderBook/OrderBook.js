@@ -8,6 +8,7 @@ import {
     ORDER_BOOK_TABLE_LIMIT,
     ORDER_BOOK_TOTAL_DIGITS
 } from "../../constants/constants";
+import clsx from "clsx";
 
 const useStyles = makeStyles(styles)
 
@@ -85,9 +86,9 @@ function OrderBook() {
             const total = item[0] * item[1];
             return (
                 <tr key={index}>
-                    <td className={type === ASKS ? classes.asksColumn : classes.bidsColumn}> {price.toFixed(ORDER_BOOK_PRICE_DIGITS)} </td>
-                    <td> {amount.toFixed(ORDER_BOOK_AMOUNT_DIGITS)} </td>
-                    <td style={{textAlign: "right"}}> {total.toFixed(ORDER_BOOK_TOTAL_DIGITS)} </td>
+                    <td className={clsx(classes.priceColumn, type === ASKS ? classes.asksPriceColumn : classes.bidsPriceColumn)}> {price.toFixed(ORDER_BOOK_PRICE_DIGITS)} </td>
+                    <td className={classes.amountColumn}> {amount.toFixed(ORDER_BOOK_AMOUNT_DIGITS)} </td>
+                    <td className={classes.totalColumn}> {total.toFixed(ORDER_BOOK_TOTAL_DIGITS)} </td>
                 </tr>
             )
         })

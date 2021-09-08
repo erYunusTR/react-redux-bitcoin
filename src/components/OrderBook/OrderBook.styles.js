@@ -10,10 +10,20 @@ export default theme => ({
     },
     tableHeader: {
         color: "#848e9c"
-    }, asksColumn: {
+    },
+    asksPriceColumn: {
         color: "#f6465d"
     },
-    bidsColumn: {
+    bidsPriceColumn: {
         color: "#0ecb81"
+    },
+    priceColumn: {
+        textAlign: "right"
+    },
+    amountColumn: {
+        textAlign: "right"
+    },
+    totalColumn: {
+        textAlign: "right"
     }
 })

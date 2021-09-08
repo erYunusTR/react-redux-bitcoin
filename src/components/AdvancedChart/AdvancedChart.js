@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
 import styles from './AdvancedChart.styles'
 import TradingViewWidget from 'react-tradingview-widget';
+import {CURRENCY_PAIR} from "../../constants/constants";
 
 const useStyles = makeStyles(styles)
 
@@ -12,7 +13,7 @@ function AdvancedChart() {
         <div className={classes.root}>
             <TradingViewWidget
                 autosize
-                symbol="BTCUSD"
+                symbol={CURRENCY_PAIR.toUpperCase()}
                 interval="15"
                 theme="Dark"
                 style="1"
