@@ -7,7 +7,7 @@ import {
     AMOUNT_DIGITS,
     TOTAL_DIGITS,
     ORDER_BOOK_TABLE_LIMIT
-} from "../../constants/constants";
+} from "../../constants";
 import clsx from "clsx";
 import styles from './OrderBook.styles'
 

@@ -6,7 +6,7 @@ import {
     LIVE_ORDERS_TABLE_LIMIT,
     AMOUNT_DIGITS,
     PRICE_DIGITS
-} from "../../constants/constants";
+} from "../../constants";
 import clsx from "clsx";
 import moment from "moment";
 import styles from './LiveOrders.styles'

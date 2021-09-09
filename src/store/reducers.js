@@ -1,11 +1,15 @@
 import {combineReducers} from 'redux'
 
-import locationReducer from './location'
+import orderBookReducer from './states/orderBook'
+import liveOrdersReducer from './states/liveOrders'
+import liveTradesReducer from './states/liveTrades'
 
 export function makeRootReducer(asyncReducers) {
     return combineReducers({
         // Add sync reducers here
-        location: locationReducer,
+        orderBook: orderBookReducer,
+        liveOrders: liveOrdersReducer,
+        liveTrades: liveTradesReducer,
         ...asyncReducers
     })
 }

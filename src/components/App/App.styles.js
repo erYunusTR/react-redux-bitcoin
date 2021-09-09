@@ -22,11 +22,15 @@ export default theme => ({
     },
     orderBook: {
         gridArea: "orderBook",
-        backgroundColor: gridItemColor
+        backgroundColor: gridItemColor,
+        overflow: "auto",
+        overflowX: "hidden"
     },
     liveOrders: {
         gridArea: "liveOrders",
-        backgroundColor: gridItemColor
+        backgroundColor: gridItemColor,
+        overflow: "auto",
+        overflowX: "hidden"
     },
     liveTrades: {
         gridArea: "liveTrades",

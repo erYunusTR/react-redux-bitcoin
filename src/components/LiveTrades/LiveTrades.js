@@ -5,7 +5,7 @@ import {
     CURRENCY_PAIR,
     AMOUNT_DIGITS,
     PRICE_DIGITS
-} from "../../constants/constants";
+} from "../../constants";
 import clsx from "clsx";
 import moment from "moment";
 import styles from './LiveTrades.styles'
