@@ -1,7 +1,6 @@
 {
   "name": "react-redux-bitcoin",
   "version": "0.1.0",
-  "homepage": "https://eryunustr.github.io/react-redux-bitcoin/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

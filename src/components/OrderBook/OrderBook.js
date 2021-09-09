@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
-import styles from './OrderBook.styles'
 import {
     API_URL,
     CURRENCY_PAIR,
@@ -10,6 +9,7 @@ import {
     ORDER_BOOK_TABLE_LIMIT
 } from "../../constants/constants";
 import clsx from "clsx";
+import styles from './OrderBook.styles'
 
 const useStyles = makeStyles(styles)
 
@@ -19,7 +19,7 @@ function TableHeader() {
     return (
         <thead className={classes.tableHeader}>
         <tr>
-            <th colSpan="3">{"ORDER BOOK"}</th>
+            <th className={classes.tableTitle} colSpan="3" >{"ORDER BOOK"}</th>
         </tr>
         <tr>
             <th className={classes.priceTh}>Price(USD)</th>
@@ -89,7 +89,7 @@ function OrderBook() {
             const total = item[0] * item[1];
             return (
                 <tr key={index}>
-                    <td className={clsx(classes.priceColumn, type === ASKS ? classes.asksPriceColumn : classes.bidsPriceColumn)}> {price.toFixed(PRICE_DIGITS)} </td>
+                    <td className={clsx(classes.priceColumn, type === ASKS ? classes.sellPriceColumn : classes.buyPriceColumn)}> {price.toFixed(PRICE_DIGITS)} </td>
                     <td className={classes.amountColumn}> {amount.toFixed(AMOUNT_DIGITS)} </td>
                     <td className={classes.totalColumn}> {total.toFixed(TOTAL_DIGITS)} </td>
                 </tr>

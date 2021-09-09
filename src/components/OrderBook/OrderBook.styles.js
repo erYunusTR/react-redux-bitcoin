@@ -8,15 +8,19 @@ export default theme => ({
         fontSize: 12,
         color: "#b7bdc6",
         margin: "auto",
-        paddingTop: 10,
+        paddingTop: 10
     },
     tableHeader: {
         color: "#848e9c"
     },
-    asksPriceColumn: {
+    tableTitle: {
+        fontSize: 18,
+        paddingBottom: 5
+    },
+    sellPriceColumn: {
         color: "#f6465d"
     },
-    bidsPriceColumn: {
+    buyPriceColumn: {
         color: "#0ecb81"
     },
     priceTh: {

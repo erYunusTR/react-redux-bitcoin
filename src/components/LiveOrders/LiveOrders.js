@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
-import styles from './LiveOrders.styles'
 import {
     API_URL,
     CURRENCY_PAIR,
@@ -10,21 +9,25 @@ import {
 } from "../../constants/constants";
 import clsx from "clsx";
 import moment from "moment";
+import styles from './LiveOrders.styles'
+import stylesOrderBook from '../OrderBook/OrderBook.styles'
 
 const useStyles = makeStyles(styles)
+const useStylesOrderBook = makeStyles(stylesOrderBook)
 
 function TableHeader() {
     const classes = useStyles()
+    const classesOrderBook = useStylesOrderBook()
 
     return (
-        <thead className={classes.tableHeader}>
+        <thead className={classesOrderBook.tableHeader}>
         <tr>
-            <th colSpan="3">{"LIVE ORDERS"}</th>
+            <th className={classesOrderBook.tableTitle} colSpan="3">{"LIVE ORDERS"}</th>
         </tr>
         <tr>
-            <th className={classes.priceTh}>Price(USD)</th>
-            <th className={classes.amountTh}>Amount(BTC)</th>
-            <th className={classes.totalTh}>Time</th>
+            <th className={classesOrderBook.priceTh}>Price(USD)</th>
+            <th className={classesOrderBook.amountTh}>Amount(BTC)</th>
+            <th className={classesOrderBook.totalTh}>Time</th>
         </tr>
         </thead>
     );
@@ -32,6 +35,7 @@ function TableHeader() {
 
 function LiveOrders() {
     const classes = useStyles()
+    const classesOrderBook = useStylesOrderBook()
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
@@ -70,9 +74,9 @@ function LiveOrders() {
             if (price && amount) {
                 return (
                     <tr key={index}>
-                        <td className={clsx(classes.priceColumn, orderType == 0 ? classes.buyPriceColumn : classes.sellPriceColumn)}> {price.toFixed(PRICE_DIGITS)} </td>
-                        <td className={classes.amountColumn}> {amount.toFixed(AMOUNT_DIGITS)} </td>
-                        <td className={classes.timeColumn}>{moment.unix(dateTime).format("HH:mm:ss")}</td>
+                        <td className={clsx(classesOrderBook.priceColumn, orderType == 0 ? classesOrderBook.buyPriceColumn : classesOrderBook.sellPriceColumn)}> {price.toFixed(PRICE_DIGITS)} </td>
+                        <td className={classesOrderBook.amountColumn}> {amount.toFixed(AMOUNT_DIGITS)} </td>
+                        <td className={classesOrderBook.totalColumn}>{moment.unix(dateTime).format("HH:mm:ss")}</td>
                     </tr>
                 )
             }
@@ -80,8 +84,8 @@ function LiveOrders() {
     );
 
     return (
-        <div className={classes.root}>
-            <table className={classes.table}>
+        <div className={classesOrderBook.root}>
+            <table className={classesOrderBook.table}>
                 <TableHeader/>
                 <tbody>{orders && orderRows(orders)}</tbody>
             </table>
