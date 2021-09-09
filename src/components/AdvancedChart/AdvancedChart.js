@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {makeStyles} from '@material-ui/core/styles'
 import styles from './AdvancedChart.styles'
-import TradingViewWidget from 'react-tradingview-widget';
-import {CURRENCY_PAIR} from "../../constants";
+import TradingViewWidget from 'react-tradingview-widget'
+import {CURRENCY_PAIR} from "../../constants"
 
 const useStyles = makeStyles(styles)
 

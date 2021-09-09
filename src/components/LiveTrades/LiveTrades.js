@@ -1,15 +1,12 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
-import {
-    API_URL,
-    CURRENCY_PAIR,
-    AMOUNT_DIGITS,
-    PRICE_DIGITS
-} from "../../constants";
-import clsx from "clsx";
-import moment from "moment";
+import {AMOUNT_DIGITS, API_URL, CURRENCY_PAIR, PRICE_DIGITS} from "../../constants"
+import clsx from "clsx"
+import moment from "moment"
 import styles from './LiveTrades.styles'
 import stylesOrderBook from '../OrderBook/OrderBook.styles'
+import {useDispatch, useSelector} from "react-redux";
+import {liveTradesAdd} from "../../store/states/liveTrades";
 
 const useStyles = makeStyles(styles)
 const useStylesOrderBook = makeStyles(stylesOrderBook)
@@ -30,13 +27,15 @@ function TableHeader() {
             <th className={classes.totalTh}>Time</th>
         </tr>
         </thead>
-    );
+    )
 }
 
 function LiveTrades() {
     const classes = useStyles()
     const classesOrderBook = useStylesOrderBook()
-    const [orders, setOrders] = useState([]);
+
+    const dispatch = useDispatch()
+    const liveTradesStore = useSelector(state => state.liveTrades)
 
     useEffect(() => {
         const subscribe = {
@@ -44,32 +43,33 @@ function LiveTrades() {
             data: {
                 channel: `live_trades_${CURRENCY_PAIR}`
             }
-        };
+        }
 
-        const ws = new WebSocket(API_URL);
+        const ws = new WebSocket(API_URL)
 
         ws.onopen = () => {
-            ws.send(JSON.stringify(subscribe));
-        };
+            ws.send(JSON.stringify(subscribe))
+        }
         ws.onmessage = (event) => {
-            const response = JSON.parse(event.data);
-            setOrders(orders => [response.data, ...orders]);
-        };
+            const response = JSON.parse(event.data)
+            //add response data to redux store
+            dispatch(liveTradesAdd(response.data))
+        }
         ws.onclose = () => {
-            ws.close();
-        };
+            ws.close()
+        }
 
         return () => {
-        };
-    }, []);
+        }
+    }, [])
 
     const orderRows = (array) => (
         array &&
         array.map((item, index) => {
-            const price = parseFloat(item.price);
-            const amount = parseFloat(item.amount);
-            const dateTime = item.timestamp;
-            const type = parseInt(item.type);
+            const price = parseFloat(item.price)
+            const amount = parseFloat(item.amount)
+            const dateTime = item.timestamp
+            const type = parseInt(item.type)
 
             if (price && amount) {
                 return (
@@ -82,13 +82,13 @@ function LiveTrades() {
                 )
             }
         })
-    );
+    )
 
     return (
         <div className={classesOrderBook.root}>
             <table className={classesOrderBook.table}>
                 <TableHeader/>
-                <tbody>{orders && orderRows(orders)}</tbody>
+                <tbody>{liveTradesStore && orderRows(liveTradesStore)}</tbody>
             </table>
         </div>
     )

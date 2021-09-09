@@ -1,15 +1,17 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
 import {
+    AMOUNT_DIGITS,
     API_URL,
     CURRENCY_PAIR,
+    ORDER_BOOK_TABLE_LIMIT,
     PRICE_DIGITS,
-    AMOUNT_DIGITS,
-    TOTAL_DIGITS,
-    ORDER_BOOK_TABLE_LIMIT
-} from "../../constants";
-import clsx from "clsx";
+    TOTAL_DIGITS
+} from "../../constants"
+import clsx from "clsx"
 import styles from './OrderBook.styles'
+import {useDispatch, useSelector} from "react-redux"
+import {orderBookChange} from "../../store/states/orderBook"
 
 const useStyles = makeStyles(styles)
 
@@ -19,7 +21,7 @@ function TableHeader() {
     return (
         <thead className={classes.tableHeader}>
         <tr>
-            <th className={classes.tableTitle} colSpan="3" >{"ORDER BOOK"}</th>
+            <th className={classes.tableTitle} colSpan="3">{"ORDER BOOK"}</th>
         </tr>
         <tr>
             <th className={classes.priceTh}>Price(USD)</th>
@@ -27,14 +29,16 @@ function TableHeader() {
             <th className={classes.totalTh}>Total</th>
         </tr>
         </thead>
-    );
+    )
 }
 
 function OrderBook() {
     const classes = useStyles()
-    const [orders, setOrders] = useState([]);
     const ASKS = "ASKS"
     const BIDS = "BIDS"
+
+    const dispatch = useDispatch()
+    const orderBookStore = useSelector(state => state.orderBook)
 
     useEffect(() => {
         const subscribe = {
@@ -42,26 +46,27 @@ function OrderBook() {
             data: {
                 channel: `order_book_${CURRENCY_PAIR}`
             }
-        };
-        const ws = new WebSocket(API_URL);
+        }
+        const ws = new WebSocket(API_URL)
 
         ws.onopen = () => {
-            ws.send(JSON.stringify(subscribe));
-        };
+            ws.send(JSON.stringify(subscribe))
+        }
         ws.onmessage = (event) => {
-            const response = JSON.parse(event.data);
-            setOrders(response.data);
-        };
+            const response = JSON.parse(event.data)
+            //add response data to redux store
+            dispatch(orderBookChange(response.data))
+        }
         ws.onclose = () => {
-            ws.close();
-        };
+            ws.close()
+        }
 
         return () => {
-            ws.close();
-        };
-    }, []);
+            ws.close()
+        }
+    }, [])
 
-    const {bids, asks} = orders;
+    const {bids, asks} = orderBookStore
 
     const sortArrayBigToSmall = (array) => {
         return array && array.sort((a, b) => (a[0] + b[0]))
@@ -84,9 +89,9 @@ function OrderBook() {
     const orderRows = (array, type) => (
         array &&
         array.map((item, index) => {
-            const price = parseFloat(item[0]);
-            const amount = parseFloat(item[1]);
-            const total = item[0] * item[1];
+            const price = parseFloat(item[0])
+            const amount = parseFloat(item[1])
+            const total = item[0] * item[1]
             return (
                 <tr key={index}>
                     <td className={clsx(classes.priceColumn, type === ASKS ? classes.sellPriceColumn : classes.buyPriceColumn)}> {price.toFixed(PRICE_DIGITS)} </td>
@@ -95,7 +100,7 @@ function OrderBook() {
                 </tr>
             )
         })
-    );
+    )
 
     return (
         <div className={classes.root}>

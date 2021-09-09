@@ -4,26 +4,24 @@
 export const ORDER_BOOK_CHANGE = 'ORDER_BOOK_CHANGE'
 
 // ------------------------------------
-// Actions
+// Reducer
 // ------------------------------------
-export function orderBookChange(orderBook = []) {
-    return {
-        type: ORDER_BOOK_CHANGE,
-        payload: orderBook
+const initialState = {}
+export default function orderBookReducer(state = initialState, action) {
+    switch (action.type) {
+        case ORDER_BOOK_CHANGE:
+            return action.payload
+        default:
+            return state
     }
 }
 
 // ------------------------------------
-// Specialized Action Creator
+// Actions
 // ------------------------------------
-export function updateOrderBook({dispatch}) {
-    return (nextOrderBook) => dispatch(orderBookChange(nextOrderBook))
-}
-
-// ------------------------------------
-// Reducer
-// ------------------------------------
-const initialState = []
-export default function orderBookReducer(state = initialState, action) {
-    return action.type === ORDER_BOOK_CHANGE ? action.payload : state
+export function orderBookChange(orderBook = {}) {
+    return {
+        type: ORDER_BOOK_CHANGE,
+        payload: orderBook
+    }
 }
