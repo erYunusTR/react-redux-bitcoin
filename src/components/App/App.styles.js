@@ -18,36 +18,32 @@ export default theme => ({
                              "left orderBook liveTrades liveOrders right"
                            `,
         gridTemplateColumns: "1fr minmax(253px, 320px) minmax(510px, 880px) minmax(253px, 320px) 1fr",
-        gridTemplateRows: "auto auto",
+        gridTemplateRows: "minmax(auto, 70vh) minmax(auto, 30vh)",
     },
     orderBook: {
         gridArea: "orderBook",
         backgroundColor: gridItemColor
-        //backgroundColor: "red" //delete later
     },
     liveOrders: {
         gridArea: "liveOrders",
         backgroundColor: gridItemColor
-        //backgroundColor: "green" //delete later
     },
     liveTrades: {
         gridArea: "liveTrades",
-        backgroundColor: gridItemColor
-        //backgroundColor: "blue" //delete later
+        backgroundColor: gridItemColor,
+        overflow: "auto",
+        overflowX: "hidden"
     },
     advancedChart: {
         gridArea: "advancedChart",
         backgroundColor: gridItemColor
-        //backgroundColor: "orange" //delete later
     },
     left: {
         gridArea: "left",
         backgroundColor: gridItemColor
-        //backgroundColor: "purple" //delete later
     },
     right: {
         gridArea: "right",
         backgroundColor: gridItemColor
-        //backgroundColor: "purple" //delete later
     }
 })

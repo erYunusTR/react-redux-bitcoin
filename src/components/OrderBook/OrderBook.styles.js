@@ -1,12 +1,14 @@
 export default theme => ({
     root: {
-        // style code
+        margin: 10
     },
     table: {
+        borderCollapse: "collapse",
+        width: "100%",
         fontSize: 12,
         color: "#b7bdc6",
         margin: "auto",
-        paddingTop: 10
+        paddingTop: 10,
     },
     tableHeader: {
         color: "#848e9c"
@@ -17,8 +19,17 @@ export default theme => ({
     bidsPriceColumn: {
         color: "#0ecb81"
     },
-    priceColumn: {
+    priceTh: {
+        textAlign: "left"
+    },
+    amountTh: {
         textAlign: "right"
+    },
+    totalTh: {
+        textAlign: "right"
+    },
+    priceColumn: {
+        textAlign: "left"
     },
     amountColumn: {
         textAlign: "right"

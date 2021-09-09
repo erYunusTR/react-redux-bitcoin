@@ -19,9 +19,12 @@ function TableHeader() {
     return (
         <thead className={classes.tableHeader}>
         <tr>
-            <th>Price(USD)</th>
-            <th>Amount(BTC)</th>
-            <th>Total</th>
+            <th colSpan="3">{"ORDER BOOK"}</th>
+        </tr>
+        <tr>
+            <th className={classes.priceTh}>Price(USD)</th>
+            <th className={classes.amountTh}>Amount(BTC)</th>
+            <th className={classes.totalTh}>Total</th>
         </tr>
         </thead>
     );

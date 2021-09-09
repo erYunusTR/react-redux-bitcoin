@@ -10,3 +10,6 @@ export const ORDER_BOOK_TABLE_LIMIT = 15;
 
 //LIVE ORDERS
 export const LIVE_ORDERS_TABLE_LIMIT = 30;
+
+//LIVE TRADES
+export const LIVE_TRADES_TABLE_LIMIT = 50;
